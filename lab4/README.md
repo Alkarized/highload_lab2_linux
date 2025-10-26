@@ -6,20 +6,20 @@
 python3 -m http.server 8080
 ```
 
-![img.png](img.png)
+![img.png](imgs/img.png)
 
 - Проверяйте слушающие TCP-сокеты с помощью утилиты ss. найдите сокет с вашим http сервером.
 
 Вызов `ss -tlnp | grep 8080`
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/img_1.png)
 
 - Подключитесь к серверу через curl.
 - Проанализируйте состояние TCP-сокетов для порта 8080, объясните, почему есть сокет в состоянии TIME-WAIT, его роль и почему его нельзя удалить.
 
 Полученный результат:
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/img_2.png)
 
 **TIME-WAIT** - состояние TCP-соединения, при котором оно было закрыто, но при этом еще не удалено.
 
@@ -40,25 +40,25 @@ python3 -m http.server 8080
 
 Создаю заглушку и привязываю к ней адрес:
 
-![img_11.png](img_11.png)
+![img_11.png](imgs/img_11.png)
 
 Проверяю, что все сработало:
 
-![img_12.png](img_12.png)
+![img_12.png](imgs/img_12.png)
 
 - При помощи BIRD проаннонсируйте этот адрес при помощи протокола RIP v2 включенного на вашем интерфейсе (eth0/ens33), а так же любой другой будущий адрес из подсети 192.168.14.0/24 но только если у него будет маска подсети /32 и имя будет начинаться на service_
 
 Создаем bird.conf:
 
-![img_14.png](img_14.png)
+![img_14.png](imgs/img_14.png)
 
-![img_18.png](img_18.png)
+![img_18.png](imgs/img_18.png)
 
 Запускаю BIRD
 
-![img_16.png](img_16.png)
+![img_16.png](imgs/img_16.png)
 
-![img_13.png](img_13.png)
+![img_13.png](imgs/img_13.png)
 
 - Создайте ещё три интерфейса:
 
@@ -70,13 +70,13 @@ srv_1 192.168.14.4/32
 
 Создаю эти интерфейсы:
 
-![img_15.png](img_15.png)
+![img_15.png](imgs/img_15.png)
 
-![img_17.png](img_17.png)
+![img_17.png](imgs/img_17.png)
 
 - С помощью tcpdump докажите, что анонсируются только нужные адреса, без лишних.
 
-![img_19.png](img_19.png)
+![img_19.png](imgs/img_19.png)
 
 Вызываю `sudo tcpdump -n -v` и вижу, что вызовы RIPv2 есть только для 192.168.14.88/32, 
 тк srv_1 - не проходит по маске service, 
@@ -88,19 +88,19 @@ srv_1 192.168.14.4/32
 
 Создаю и проверяю, что правило появилось:
 
-![img_3.png](img_3.png)
+![img_3.png](imgs/img_3.png)
 
 - Запустите веб сервер на питоне и продемонстрируйте работу вашего firewall при помощи tcpdump.
 
 Запускаю сервер:
 
-![img_4.png](img_4.png)
+![img_4.png](imgs/img_4.png)
 
 И вызываю `curl http://localhost:8080` и `tcpdump`:
 
-![img_5.png](img_5.png)
+![img_5.png](imgs/img_5.png)
 
-![img_6.png](img_6.png)
+![img_6.png](imgs/img_6.png)
 
 Как видно по результатам - ответа нет, только попытки отправки, при этом из 1ого задания видно, что изначально ответ был
 
@@ -111,20 +111,20 @@ srv_1 192.168.14.4/32
 
 Просмотор настроек через `ethtool -k <adapter (ip -a link)>` 
 
-![img_7.png](img_7.png)
+![img_7.png](imgs/img_7.png)
 
-![img_8.png](img_8.png)
+![img_8.png](imgs/img_8.png)
 
 Поиск с grep по слову `offload`
 
-![img_9.png](img_9.png)
+![img_9.png](imgs/img_9.png)
 
 
 - Покажите включён ли TCP segmentation offload.
 
 Из общего списка видно, что он включен
 
-![img_10.png](img_10.png)
+![img_10.png](imgs/img_10.png)
 
 - Объясните, какую задачу решает TCP segmentation offload.
 
